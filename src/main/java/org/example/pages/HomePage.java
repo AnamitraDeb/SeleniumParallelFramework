@@ -19,9 +19,19 @@ public class HomePage {
         @FindBy(linkText = "Form Authentication")
         private WebElement formAuthentication;
 
+        @FindBy(linkText = "Shadow DOM")
+        private WebElement shadowDom;
+
+
         public FormAuthenticationPages goToFormAuthenticationPage() {
             ExtentReportManager.getTest().log(Status.INFO, "Navigating to Form Authentication Page");
             formAuthentication.click();
             return new FormAuthenticationPages(driver);
+        }
+
+        public ShadowDomPage gotToShadowDomPage(){
+            ExtentReportManager.getTest().log(Status.INFO, "Navigating to Shadow Dom Page");
+            shadowDom.click();
+            return new ShadowDomPage(driver);
         }
     }

@@ -1,6 +1,5 @@
 package org.example.listeners;
 
-import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import org.example.utils.BaseTestSetup;
 import org.example.utils.ExtentReportManager;
