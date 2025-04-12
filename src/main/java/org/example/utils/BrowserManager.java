@@ -2,6 +2,7 @@ package org.example.utils;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
@@ -14,7 +15,10 @@ public class BrowserManager {
 
         switch (browser) {
             case "chrome":
-                driver = new ChromeDriver();
+                ChromeOptions options = new ChromeOptions();
+                options.addArguments("--incognito");  // Run in incognito mode
+                options.addArguments("--disable-save-password-bubble");
+                driver = new ChromeDriver(options);
                 break;
             case "edge":
                 driver = new EdgeDriver();
