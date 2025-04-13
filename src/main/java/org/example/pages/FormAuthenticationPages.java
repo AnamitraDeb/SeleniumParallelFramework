@@ -1,11 +1,17 @@
 package org.example.pages;
 
-import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.MediaEntityBuilder;
 import org.example.utils.ExtentReportManager;
+import org.example.utils.ScreenshotManager;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class FormAuthenticationPages {
 
@@ -36,32 +42,38 @@ public class FormAuthenticationPages {
     private WebElement welcomeBanner;
 
     public void enterUsername(String username) {
-        ExtentReportManager.getTest().log(Status.INFO, "Entering username: "+ username);
         userNameTextField.sendKeys(username);
+        ExtentReportManager.getTest().info("Entering username: "+ username,
+                MediaEntityBuilder.createScreenCaptureFromBase64String(ScreenshotManager.getScreens(driver)).build());
     }
 
     public void enterPassword(String password) {
-        ExtentReportManager.getTest().log(Status.INFO, "Entering password: "+ password);
         passwordTextField.sendKeys(password);
+        ExtentReportManager.getTest().info("Entering password: "+ password,
+                MediaEntityBuilder.createScreenCaptureFromBase64String(ScreenshotManager.getScreens(driver)).build());
     }
 
     public void clickLoginButton() {
-        ExtentReportManager.getTest().log(Status.INFO, "Clicking on login button");
         loginButton.click();
+        ExtentReportManager.getTest().info("Clicking on login button",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(ScreenshotManager.getScreens(driver)).build());
     }
 
     public String getBannerMessage() {
-        ExtentReportManager.getTest().log(Status.INFO, "Fetching banner message:: " + banners.getText().split("\n")[0]);
+        ExtentReportManager.getTest().info("Fetching banner message:: " + banners.getText().split("\n")[0],
+                MediaEntityBuilder.createScreenCaptureFromBase64String(ScreenshotManager.getScreens(driver)).build());
         return banners.getText().split("\n")[0];
     }
 
     public String getWelcomeMessage() {
-        ExtentReportManager.getTest().log(Status.INFO, "Fetching welcome message:: " + welcomeBanner.getText());
+        ExtentReportManager.getTest().info("Fetching welcome message:: " + welcomeBanner.getText(),
+                MediaEntityBuilder.createScreenCaptureFromBase64String(ScreenshotManager.getScreens(driver)).build());
         return welcomeBanner.getText();
     }
 
     public void clickLogoutButton() {
-        ExtentReportManager.getTest().log(Status.INFO, "Clicking on logout button");
         logoutButton.click();
+        ExtentReportManager.getTest().info("Clicking on logout button",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(ScreenshotManager.getScreens(driver)).build());
     }
 }

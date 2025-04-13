@@ -1,7 +1,8 @@
 package org.example.pages;
 
-import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.MediaEntityBuilder;
 import org.example.utils.ExtentReportManager;
+import org.example.utils.ScreenshotManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -24,14 +25,9 @@ public class HomePage {
 
 
         public FormAuthenticationPages goToFormAuthenticationPage() {
-            ExtentReportManager.getTest().log(Status.INFO, "Navigating to Form Authentication Page");
             formAuthentication.click();
+            ExtentReportManager.getTest().info("Navigating to Form Authentication Page",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(ScreenshotManager.getScreens(driver)).build());
             return new FormAuthenticationPages(driver);
-        }
-
-        public ShadowDomPage gotToShadowDomPage(){
-            ExtentReportManager.getTest().log(Status.INFO, "Navigating to Shadow Dom Page");
-            shadowDom.click();
-            return new ShadowDomPage(driver);
         }
     }
