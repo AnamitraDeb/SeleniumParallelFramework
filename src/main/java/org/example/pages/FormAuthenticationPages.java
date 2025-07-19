@@ -1,29 +1,25 @@
 package org.example.pages;
 
 import com.aventstack.extentreports.MediaEntityBuilder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.example.utils.ExtentReportManager;
 import org.example.utils.ScreenshotManager;
-import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 
 public class FormAuthenticationPages {
 
+    private static final Logger logger = LogManager.getLogger(FormAuthenticationPages.class);
     WebDriver driver;
 
     public FormAuthenticationPages(WebDriver driver) {
 
         this.driver = driver;
         PageFactory.initElements(driver, this);
-    }
-
-    @FindBy(id = "username")
+    }   @FindBy(id = "username")
     private WebElement userNameTextField;
 
     @FindBy(id = "password")
@@ -41,38 +37,80 @@ public class FormAuthenticationPages {
     @FindBy(tagName = "h4")
     private WebElement welcomeBanner;
 
+
+
     public void enterUsername(String username) {
-        userNameTextField.sendKeys(username);
+        try{
+            userNameTextField.sendKeys(username);
+            logger.info("Entering username: {}", username);
+        } catch (Exception e) {
+            logger.error("Failed Entering username: {}", username, e);
+        }
+
         ExtentReportManager.getTest().info("Entering username: "+ username,
                 MediaEntityBuilder.createScreenCaptureFromBase64String(ScreenshotManager.getScreens(driver)).build());
     }
 
     public void enterPassword(String password) {
-        passwordTextField.sendKeys(password);
+        try{
+            passwordTextField.sendKeys(password);
+            logger.info("Entering password: {}", password);
+        } catch (Exception e) {
+            logger.error("Failed Entering password: {}", password, e);
+        }
+
         ExtentReportManager.getTest().info("Entering password: "+ password,
                 MediaEntityBuilder.createScreenCaptureFromBase64String(ScreenshotManager.getScreens(driver)).build());
     }
 
     public void clickLoginButton() {
-        loginButton.click();
+        try {
+            loginButton.click();
+            logger.info("Clicking on login button");
+        } catch (Exception e) {
+            logger.error("Failed Clicking on login button");
+        }
         ExtentReportManager.getTest().info("Clicking on login button",
                 MediaEntityBuilder.createScreenCaptureFromBase64String(ScreenshotManager.getScreens(driver)).build());
     }
 
     public String getBannerMessage() {
-        ExtentReportManager.getTest().info("Fetching banner message:: " + banners.getText().split("\n")[0],
+
+        String bannerMessage = "";
+        try {
+           bannerMessage =  banners.getText().split("\n")[0];
+           logger.info("Fetching banner message:: {}", bannerMessage);
+        } catch (Exception e) {
+            logger.error("Failed Fetching Banner message:: " ,e);
+        }
+        ExtentReportManager.getTest().info("Fetching banner message:: " + bannerMessage,
                 MediaEntityBuilder.createScreenCaptureFromBase64String(ScreenshotManager.getScreens(driver)).build());
-        return banners.getText().split("\n")[0];
+
+        return bannerMessage;
     }
 
     public String getWelcomeMessage() {
-        ExtentReportManager.getTest().info("Fetching welcome message:: " + welcomeBanner.getText(),
+
+        String welcomeMessage = "";
+        try {
+            welcomeMessage =  welcomeBanner.getText();
+            logger.info("Fetching welcome message:: {}", welcomeMessage);
+        } catch (Exception e) {
+            logger.error("Failed Fetching welcome message:: ", e);
+        }
+        ExtentReportManager.getTest().info("Fetching welcome message:: " + welcomeMessage,
                 MediaEntityBuilder.createScreenCaptureFromBase64String(ScreenshotManager.getScreens(driver)).build());
-        return welcomeBanner.getText();
+        return welcomeMessage;
     }
 
     public void clickLogoutButton() {
-        logoutButton.click();
+        try {
+            logoutButton.click();
+            logger.info("Clicking on logout button");
+        } catch (Exception e) {
+            logger.error("Failed Clicking on logout button");
+        }
+
         ExtentReportManager.getTest().info("Clicking on logout button",
                 MediaEntityBuilder.createScreenCaptureFromBase64String(ScreenshotManager.getScreens(driver)).build());
     }
